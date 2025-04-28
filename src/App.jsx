@@ -71,7 +71,19 @@ function App() {
 
       <div>
         {messages.map((msg) => (
-          <div key={msg.id} style={{ marginBottom: '10px' }}>
+          <div
+            key={msg.id}
+            style={{
+              marginBottom: '10px',
+              textAlign: 'right', // Menampilkan pesan di sebelah kanan
+              marginLeft: 'auto', // Menempatkan pesan ke kanan
+              maxWidth: '60%', // Mengatur lebar pesan agar tidak terlalu lebar
+              padding: '5px',
+              backgroundColor: '#f1f1f1',
+              borderRadius: '10px',
+              wordWrap: 'break-word',
+            }}
+          >
             <strong>{msg.username}</strong>: {msg.content}
           </div>
         ))}
