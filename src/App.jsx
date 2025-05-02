@@ -6,7 +6,6 @@ function App() {
   const [input, setInput] = useState('')
   const [username, setUsername] = useState('')
 
-  // Fetch data pesan
   const fetchMessages = async () => {
     const { data, error } = await supabase
       .from('Pesan')
@@ -20,7 +19,6 @@ function App() {
     }
   }
 
-  // Insert pesan baru
   const sendMessage = async (e) => {
     e.preventDefault()
 
@@ -36,8 +34,8 @@ function App() {
     if (error) {
       console.error('Error sending message:', error)
     } else {
-      setInput('') // Bersihin input setelah kirim
-      fetchMessages() // Refresh pesan
+      setInput('')
+      fetchMessages()
     }
   }
 
@@ -46,48 +44,88 @@ function App() {
   }, [])
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial' }}>
-      <h1>💬 Chat App</h1>
+    <div style={{
+      padding: '20px',
+      fontFamily: 'Arial, sans-serif',
+      maxWidth: '600px',
+      margin: '0 auto',
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column'
+    }}>
+      <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>💬 Chat App</h1>
 
-      <form onSubmit={sendMessage} style={{ marginBottom: '20px' }}>
-        <input
-          type="text"
-          placeholder="Username..."
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          style={{ marginRight: '10px', padding: '5px' }}
-        />
-        <input
-          type="text"
-          placeholder="Ketik pesan..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          style={{ marginRight: '10px', padding: '5px' }}
-        />
-        <button type="submit" style={{ padding: '5px 10px' }}>
-          Kirim
-        </button>
-      </form>
-
-      <div>
+      <div style={{
+        flexGrow: 1,
+        overflowY: 'auto',
+        marginBottom: '20px',
+        border: '1px solid #ccc',
+        borderRadius: '10px',
+        padding: '10px',
+        backgroundColor: '#fafafa'
+      }}>
         {messages.map((msg) => (
           <div
             key={msg.id}
             style={{
               marginBottom: '10px',
-              textAlign: 'right', // Menampilkan pesan di sebelah kanan
-              marginLeft: 'auto', // Menempatkan pesan ke kanan
-              maxWidth: '60%', // Mengatur lebar pesan agar tidak terlalu lebar
-              padding: '5px',
-              backgroundColor: '#f1f1f1',
-              borderRadius: '10px',
-              wordWrap: 'break-word',
+              display: 'flex',
+              justifyContent: username === msg.username ? 'flex-end' : 'flex-start'
             }}
           >
-            <strong>{msg.username}</strong>: {msg.content}
+            <div style={{
+              maxWidth: '70%',
+              padding: '10px',
+              borderRadius: '15px',
+              backgroundColor: username === msg.username ? '#dcf8c6' : '#e4e6eb',
+              textAlign: 'left',
+              wordBreak: 'break-word',
+            }}>
+              <div style={{ fontSize: '0.8em', fontWeight: 'bold', marginBottom: '5px', color: 'black' }}>
+                {msg.username}
+              </div>
+              <div>{msg.content}</div>
+            </div>
           </div>
         ))}
       </div>
+
+      <form onSubmit={sendMessage} style={{ display: 'flex', gap: '10px' }}>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          style={{
+            flex: 1,
+            padding: '10px',
+            borderRadius: '10px',
+            border: '1px solid #ccc'
+          }}
+        />
+        <input
+          type="text"
+          placeholder="Tulis pesan..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          style={{
+            flex: 2,
+            padding: '10px',
+            borderRadius: '10px',
+            border: '1px solid #ccc'
+          }}
+        />
+        <button type="submit" style={{
+          padding: '10px 20px',
+          borderRadius: '10px',
+          backgroundColor: '#4CAF50',
+          color: 'white',
+          border: 'none',
+          cursor: 'pointer'
+        }}>
+          Kirim
+        </button>
+      </form>
     </div>
   )
 }
