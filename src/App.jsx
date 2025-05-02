@@ -84,7 +84,7 @@ function App() {
               <div style={{ fontSize: '0.8em', fontWeight: 'bold', marginBottom: '5px', color: 'black' }}>
                 {msg.username}
               </div>
-              <div>{msg.content}</div>
+              <div style={{ fontSize: '0.6em', fontWeight: 'bold', marginBottom: '5px', color: 'black' }}>{msg.content}</div>
             </div>
           </div>
         ))}
